@@ -6,7 +6,11 @@ import com.region.task.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value="/api/v1/product-api")
@@ -36,13 +40,17 @@ public class ProductController {
     }
 
     @PostMapping(value="/product")
-    public ProductDTO createProduct(@RequestBody ProductDTO productDto){
+    public ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody ProductDTO productDto){
         String productId = productDto.getProductId();
         String productName = productDto.getProductName();
         int productPrice = productDto.getProductPrice();
         int productStock = productDto.getProductStock();
 
-        return productService.saveProduct(productId,productName,productPrice,productStock);
+        ProductDTO response = productService.saveProduct(productId,productName,productPrice,productStock);
+        LOGGER.info("[createProduct] Response >> productId:{}, productName:{},productPrice:{},productStock:{}"
+        ,response.getProductId(),response.getProductName(),response.getProductPrice(),response.getProductStock()
+        );
+        return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
 

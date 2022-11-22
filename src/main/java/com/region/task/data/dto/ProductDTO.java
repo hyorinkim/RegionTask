@@ -3,15 +3,29 @@ package com.region.task.data.dto;
 import com.region.task.data.entity.ProductEntity;
 import lombok.*;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Builder
 public class ProductDTO {
+    @NotNull
+//    @Size(min=8,max=8)
     private String productId;
+    @NotNull
     private String productName;
+    @NotNull
+    @Min(value=500)
+    @Max(value=100000000)
     private int productPrice;
+    @NotNull
+    @Min(value=0)
+    @Max(value=999999)
     private int productStock;
 
     public ProductEntity toEntity(){
