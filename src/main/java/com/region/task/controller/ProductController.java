@@ -1,5 +1,7 @@
 package com.region.task.controller;
 
+import com.region.task.common.Constants;
+import com.region.task.common.exception.RegionTaskException;
 import com.region.task.data.dto.ProductDTO;
 import com.region.task.service.ProductService;
 import com.region.task.service.ProductService;
@@ -57,5 +59,9 @@ public class ProductController {
     @DeleteMapping(value="/product/delete")
     public ProductDTO deleteProduct(@PathVariable String productId){
         return null;
+    }
+    @PostMapping(value="/product/exception")
+    public void exceptionTest() throws RegionTaskException{
+        throw new RegionTaskException(Constants.ExceptionClass.PRODUCT,HttpStatus.FORBIDDEN,"접근이 금지 되었습니다.");
     }
 }
